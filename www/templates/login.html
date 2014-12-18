@@ -1,0 +1,28 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Login</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="doLogin()">
+      <div class="list">
+        <label class="item item-input item-select">
+          <span class="input-label">City</span>
+          <select ng-change="updateRest()" ng-model="loginData.city" ng-options="city for city in cityOptions">
+            <option value="" disabled selected>Select</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Restaurant</span>
+          <select ng-model="loginData.rest" ng-options="rest.name for rest in restOptions">
+            <option value="" disabled selected>Select</option>
+          </select>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</div>
+

@@ -1,0 +1,64 @@
+<ion-view title="{{order.order_id | limitTo : 13 | limitTo:-4}} @ {{ order.created_time | date:'h:mma'}}">
+  <ion-content class="has-header">
+    <div class="card">
+      <div class="item item-text-wrap">
+        <div> {{ order.status}} - {{order.msg}} </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-text-wrap">
+        {{order.address}} {{order.address2}}
+      </div>
+      <div class="item item-text-wrap assertive" ng-if="order.delay!=='now'">
+        Future order @ {{ order.delay }}
+      </div>
+      <div class="item item-text-wrap">
+        {{order.phone}}
+      </div>
+    </div>
+
+    <div class="card">
+      <ion-list>
+        <ion-item ng-repeat="item in order.items | orderBy:'food_id'"><span>{{item.name}}</span><span style="float:right">{{item.price | currency}}</span></ion-item>
+        
+        <ion-item class="item-divider"><span>Subtotal</span><span class="right">{{order.subtotal | currency}}</span></ion-item>
+        <ion-item><span>Tax</span><span class="right">{{order.tax | currency}}</span></ion-item>
+        <ion-item><span>Fee</span><span class="right">{{order.fee | currency}}</span></ion-item>
+        <ion-item class="item-divider"><span>Total</span><span class="right">{{order.total | currency}}</span></ion-item>
+      </ion-list>
+    </div>
+
+    <div ng-hide="order.done">
+    <div class="card">
+      <label class="item item-input item-select">
+        <span class="input-label">Estimate</span>
+        <select ng-if="order.delay==='now'" ng-options="timeOption for timeOption in timeOptions" ng-model="confirmData.time">
+          <option value="" disabled selected>Select</option>
+        </select>
+        <select ng-if="order.delay!=='now'" ng-model="confirmData.time">
+          <option ng-value="order.delay" selected>{{order.delay}}</option>
+        </select>
+      </label>
+      <div class='item'>
+        <button ng-click="showConfirm()" class="button button-full button-positive ion-checkmark-circled">
+          Confirm
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <label class="item item-input">
+        <span class="input-label">Reason</span>
+        <input type="text" ng-model="confirmData.reason" placeHolder="Cancel by restaurant">
+      </label>
+      <div class='item'>
+        <button ng-click="showCancel()" class="button button-full button-assertive ion-close-circled ">
+          Cancel
+        </button>
+      </div>
+    </div>
+    </div>
+    
+  </ion-content>
+</ion-view>

@@ -1,0 +1,19 @@
+<ion-view title="Order List">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-refresher pulling-text="Pull to refresh..."on-refresh="load(true)"> </ion-refresher>
+    <div class='list'>
+      <a class='item item-icon-right' ng-repeat="order in orders | orderBy:'update_time':true" href="#/app/orderDetail/{{order.order_id}}">
+        <h2> #{{ order.order_id.slice(9,13) }} @ {{ order.update_time | date:'h:mma'}}</h2>
+        <p> {{ order.address }} </p>
+        <div ng-hide="order.delay==='now'" class='assertive'> Future order @ {{order.delay }}</div>
+        <i ng-show="order.status==='Confirmed'" class="icon ion-checkmark-round" style='opacity:0.5'></i>
+        <i ng-show="order.status==='Cancelled'" class="icon ion-close-round" style='opacity:0.5'></i>
+        <i ng-show="order.status==='Processing'" class="icon ion-help" style='opacity:0.5'></i>
+      </a>
+      <a ng-show="orders.length === 0" href='#'>Sorry, no orders</a>
+    </div>
+  </ion-content>
+</ion-view>
